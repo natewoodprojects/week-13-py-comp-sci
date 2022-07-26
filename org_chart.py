@@ -46,3 +46,47 @@ class Tree():
         """
 
         return self.root.find(data)
+    def total_nodes(self):
+        """
+        In part 3 of this exercise, we are asked to created a method that returns all the nodes in this trees. It only needs to take it self as the parameter, and because self is implied when called, zero arguments when invoked.
+        """
+        def num_children(node, current_total):
+            inner_nodes = current_total
+            
+            for child in node.children:
+                inner_nodes += 1
+                inner_nodes = num_children(child, inner_nodes)
+            
+            return inner_nodes
+
+        return num_children(self.root, 0)
+
+def make_tree(ceo_name, direct_reports):
+    underlings = []
+    for x in direct_reports:
+        underlings.append(Node(x, []))
+    ceo = Node(f'{ceo_name}/', underlings)
+    tree = Tree(ceo)
+    return tree
+
+gondor = make_tree('Milo', ['Ben','Mike','Lego','Swin','Marblo'])
+
+print(gondor)
+
+
+
+resume = Node("resume.txt", [])
+recipes = Node("recipes.txt", [])
+jane = Node("jane/", [resume, recipes])
+server = Node("server.py", [])
+jessica = Node("jessica/", [server])
+users = Node("Users/", [jane, jessica])
+root = Node("/root", [users])
+
+tree = Tree(root)
+print("server.py = ", tree.find_in_tree("server.py"))  # should find
+print("style.css = ", tree.find_in_tree("style.css"))  # should not find
+
+# Here we test out whether our method actually functions as intended.
+print(f"Total nodes are {tree.total_nodes()}")
+print(tree)
