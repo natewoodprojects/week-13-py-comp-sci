@@ -82,10 +82,18 @@ class Stack():
         """Is stack empty?"""
 
         return not bool(self._list)
+    
+    def top_two(self):
+        the_two = []
+        the_two.append(self._list.pop())
+        the_two.append(self._list.pop())
+        return the_two
 
 
 def make_short_stack(list):
-    pancakes = Stack(list)
+    pancakes = Stack()
+    for x in list:
+        pancakes.push(x)
     return pancakes
 
 cakes = ['chocolate','peanutbutter','chocolate','blueberry']
@@ -93,3 +101,6 @@ cakes = ['chocolate','peanutbutter','chocolate','blueberry']
 eight = make_short_stack(cakes)
 
 print(eight)
+
+two = eight.top_two()
+print(two)
